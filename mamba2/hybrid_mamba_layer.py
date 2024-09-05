@@ -351,7 +351,10 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
             [d_mlp, d_mlp, self.d_ssm, self.d_ssm + 2 * self.d_xb, self.nheads],
             dim=-1
         )
-
+        x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
+        q = C[:, :, :self.d_inner]
+        k = x
+        v = B
         # Conv step
         if causal_conv1d_update is None:
             conv_state.copy_(torch.roll(conv_state, shifts=-1, dims=-1))  # Update state (B D W)
@@ -372,6 +375,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         A = -torch.exp(self.A_log.float())  # (nheads,)
 
         x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
+        
         
         # minic the GQA
         x = rearrange(x, "b (xb_group dstate) -> b xb_group dstate", dstate=self.d_state)
