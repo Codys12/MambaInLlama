@@ -52,6 +52,17 @@ with torch.no_grad():
         output_attentions=True
     )
 
+
+with torch.no_grad():
+    ssm_outputs = hybrid_model.generate(
+        input_ids,
+        max_length=20,
+        use_cache=True,
+        return_dict_in_generate=True,
+        output_attentions=True
+    )
+
 # Print KV cache shape
 kv_cache = outputs.past_key_values
-print(f"KV cache shape: {[(k.shape, v.shape) for k, v in kv_cache[0]]}")
+#print(f"KV cache shape: {[(k.shape, v.shape) for k, v in kv_cache[0]]}")
+print(kv_cache)
