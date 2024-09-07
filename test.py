@@ -22,7 +22,7 @@ else:
     d_inner = config.num_attention_heads * config.head_dim
     d_state = config.head_dim
 
-ssm_layers = [0, 4, 8, 12, 16, 20, 24, 28]
+ssm_layers = [i for i in range(32)]
 attn_layers = [i for i in range(config.num_hidden_layers) if i not in ssm_layers]
 
 mamba_config = MambaConfig(
@@ -36,7 +36,7 @@ mamba_config = MambaConfig(
     n_layer=config.num_hidden_layers,
     attn_layers=attn_layers,
 )
-hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_name, mamba_config, attn_layes)
+hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_name, mamba_config, attn_layers)
 
 # Prepare dummy input
 dummy_input = "Hello, world!"
