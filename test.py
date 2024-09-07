@@ -66,10 +66,16 @@ print(kv_cache[0][1].shape)
 print(kv_cache[0][1])
 
 with torch.no_grad():
-    ssm_outputs = hybrid_model.generate(
-        input_ids,
-        max_length=20,
-        #use_cache=True,
-        return_dict_in_generate=True,
-        output_attentions=True
-    )
+    try:
+        ssm_outputs = hybrid_model.generate(
+            input_ids,
+            max_length=20,
+            #use_cache=True,
+            return_dict_in_generate=True,
+            output_attentions=True
+        )
+    except:
+        pass
+
+print(outputs)
+print(dir(outputs))
