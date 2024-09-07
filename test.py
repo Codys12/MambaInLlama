@@ -10,16 +10,31 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # Load the hybrid model
 config = transformer_model.config
+
+if not hasattr(config, 'head_dim'):
+    d_xb = config.num_key_value_heads * \
+        (config.hidden_size // config.num_attention_heads)
+    d_inner = config.hidden_size
+    d_state = config.hidden_size//config.num_attention_heads
+else:
+    # to handle gemma2
+    d_xb = config.num_key_value_heads * config.head_dim
+    d_inner = config.num_attention_heads * config.head_dim
+    d_state = config.head_dim
+
+ssm_layers = training_args.ssm_layers
+attn_layers = [i for i in range(config.num_hidden_layers) if i not in ssm_layers]
+
 mamba_config = MambaConfig(
-    hidden_size=config.hidden_size,
-    expansion_config={"expand": 1, "ngroups": config.num_attention_heads, "d_state": config.hidden_size // config.num_attention_heads},
-    norm_epsilon=config.layer_norm_eps,
-    d_inner=config.intermediate_size,
-    d_xb=config.num_key_value_heads * (config.hidden_size // config.num_attention_heads),
+    config.hidden_size,
+    {"expand": 1, "ngroups":config.num_attention_heads, "d_state": d_state},
+    config.rms_norm_eps,
+    d_inner=d_inner,
+    d_xb=d_xb,
     intermediate_size=config.intermediate_size,
     hidden_act=config.hidden_act,
     n_layer=config.num_hidden_layers,
-    attn_layers=list(range(config.num_hidden_layers))  # All layers as attention for this example
+    attn_layers=attn_layers,
 )
 hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_name, mamba_config)
 
