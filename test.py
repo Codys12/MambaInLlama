@@ -5,7 +5,7 @@ from mamba2.hybrid_mamba_config import MambaConfig
 
 # Load the transformer model
 model_name = "meta-llama/Meta-Llama-3.1-8B"
-transformer_model = AutoModelForCausalLM.from_pretrained(model_name)
+transformer_model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # Load the hybrid model
@@ -36,7 +36,10 @@ mamba_config = MambaConfig(
     n_layer=config.num_hidden_layers,
     attn_layers=attn_layers,
 )
-hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_name, mamba_config, attn_layers)
+hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_name, mamba_config, attn_layers, torch.bfloat16)
+
+transformer_model.to("cuda")
+hybrid_model.to("cuda")
 
 # Prepare dummy input
 dummy_input = "Hello, world!"
