@@ -4,7 +4,7 @@ from mamba2.hybrid_wrapper import MambaTransformerHybridModelWrapper
 from mamba2.hybrid_mamba_config import MambaConfig
 
 # Load the transformer model
-model_name = "microsoft/Phi-3-mini-128k-instruct"
+model_name = "meta-llama/Meta-Llama-3.1-8B"
 transformer_model = AutoModelForCausalLM.from_pretrained(model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
