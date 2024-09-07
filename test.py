@@ -22,6 +22,7 @@ else:
     d_inner = config.num_attention_heads * config.head_dim
     d_state = config.head_dim
 
+ssm_layers = [0, 4, 8, 12, 16, 20, 24, 28]
 attn_layers = [i for i in range(config.num_hidden_layers) if i not in ssm_layers]
 
 mamba_config = MambaConfig(
