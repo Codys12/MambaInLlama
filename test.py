@@ -36,7 +36,7 @@ mamba_config = MambaConfig(
     n_layer=config.num_hidden_layers,
     attn_layers=attn_layers,
 )
-hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_name, mamba_config)
+hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_name, mamba_config, attn_layes)
 
 # Prepare dummy input
 dummy_input = "Hello, world!"
