@@ -38,13 +38,13 @@ mamba_config = MambaConfig(
 )
 hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_name, mamba_config, attn_layers, torch.bfloat16)
 
-transformer_model.to("cuda")
-hybrid_model.to("cuda")
+transformer_model.to("cpu")
+hybrid_model.to("cpu")
 
 # Prepare dummy input
 dummy_input = "Hello, world!"
 input_ids = tokenizer(dummy_input, return_tensors="pt").input_ids
-input_ids = input_ids.to("cuda")
+input_ids = input_ids.to("cpu")
 
 # Generate with transformer model to get KV cache
 with torch.no_grad():
