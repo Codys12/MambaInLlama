@@ -41,6 +41,7 @@ hybrid_model = MambaTransformerHybridModelWrapper.init_distillation(None, model_
 # Prepare dummy input
 dummy_input = "Hello, world!"
 input_ids = tokenizer(dummy_input, return_tensors="pt").input_ids
+input_ids.to("cuda")
 
 # Generate with transformer model to get KV cache
 with torch.no_grad():
