@@ -50,7 +50,7 @@ input_ids = input_ids.to("cuda")
 with torch.no_grad():
     outputs = transformer_model.generate(
         input_ids,
-        max_length=20,
+        max_length=1,
         use_cache=True,
         return_dict_in_generate=True,
         output_attentions=True
@@ -77,5 +77,5 @@ with torch.no_grad():
     except:
         pass
 
-print(outputs)
+#print(outputs)
 print(dir(outputs))
