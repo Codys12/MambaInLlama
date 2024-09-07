@@ -74,6 +74,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         layer_idx=None,  # Absorb kwarg for general module
         process_group=None,
         sequence_parallel=True,
+        self_attn=None,
         device=None,
         dtype=None,
     ):
@@ -107,7 +108,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         self.d_xb = d_xb
         self.repeat_group = self.d_inner // self.d_xb
         self.repeat_kv_before_conv = repeat_kv_before_conv
-
+        self.self_attn = self_attn
         assert self.d_inner == self.ngroups * self.d_state
         assert self.d_inner == self.d_ssm
         
@@ -228,6 +229,14 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
             [d_mlp, d_mlp, self.d_ssm, self.d_ssm + 2 * self.d_xb, self.nheads],
             dim=-1
         )
+
+        x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
+        q = C[:, :, :self.d_inner]
+        k = x
+        v = B
+        print(q.shape)
+        print(k.shape)
+        print(v.shape)
 
         if self.repeat_kv_before_conv:
             x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
