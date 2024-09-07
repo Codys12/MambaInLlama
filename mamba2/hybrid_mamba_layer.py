@@ -238,6 +238,9 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         print(k.shape)
         print(v.shape)
 
+        print(k)
+        print(v)
+
         if self.repeat_kv_before_conv:
             x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
             # minic the GQA
