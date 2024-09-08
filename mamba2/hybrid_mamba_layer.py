@@ -272,7 +272,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         k = k.view(batch, seqlen, -1, self.headdim).transpose(1, 2)
         v = v.view(batch, seqlen, -1, self.headdim).transpose(1, 2)
 
-        _, _, num_key_value_groups, _ = v.shape
+        _, num_key_value_groups, _, _ = v.shape
 
         position_ids = torch.arange(seqlen, dtype=torch.long, device=q.device)
         position_ids = position_ids.unsqueeze(0).expand(batch, -1)
