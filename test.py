@@ -75,7 +75,7 @@ with torch.no_grad():
         output_attentions=True
     )
 
-    print(ssm_outputs)
+    print(tokenizer.decode(ssm_outputs.sequences[0]))
     # except:
     #     print("Error in SSM forward")
 
