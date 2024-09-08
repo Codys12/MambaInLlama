@@ -232,18 +232,34 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
 
         x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
         q = C[:, :, :self.d_inner]
-        k = x
-        v = B
+        k = B
+        v = x
 
         q = q.view(batch, seqlen, -1, self.headdim).transpose(1, 2)
         k = k.view(batch, seqlen, -1, self.headdim).transpose(1, 2)
         v = v.view(batch, seqlen, -1, self.headdim).transpose(1, 2)
-        print(q.shape)
-        print(k.shape)
-        print(v.shape)
+        #print(q.shape)
+        #print(k.shape)
+        #print(v.shape)
 
-        print(k)
-        print(v)
+        #print(k)
+        #print(v)
+
+        attn_output = torch.nn.functional.scaled_dot_product_attention(
+            q,
+            k,
+            v,
+            #attn_mask=causal_mask,
+            #dropout_p=self.attention_dropout if self.training else 0.0,
+            is_causal=True,
+        )
+
+        attn_output = attn_output.transpose(1, 2).contiguous()
+        attn_output = attn_output.view(batch, seqlen, -1)
+
+        attn_output = self.out_proj(attn_output)
+        return attn_output
+
 
         if self.repeat_kv_before_conv:
             x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
