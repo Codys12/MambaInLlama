@@ -52,7 +52,7 @@ class MambaTransformerHybridModelWrapper(nn.Module):
                     mamba_encoder.input_layernorm = mamba_encoder.input_layernorm.to(dtype)
                     mamba_encoder.post_attention_layernorm = mamba_encoder.post_attention_layernorm.to(dtype)
 
-                    mamba_encoder.rotary_emb = transformer_model.model.layers._modules[f'{layer_idx}'].self_attn.rotary_emb
+                    mamba_encoder.mamba.rotary_emb = transformer_model.model.layers._modules[f'{layer_idx}'].self_attn.rotary_emb
 
                 self.model.model.layers[layer_idx] = mamba_encoder
 
