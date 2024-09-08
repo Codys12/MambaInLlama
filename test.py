@@ -59,23 +59,23 @@ with torch.no_grad():
 # Print KV cache shape
 kv_cache = outputs.past_key_values
 #print(f"KV cache shape: {[(k.shape, v.shape) for k, v in kv_cache[0]]}")
-print(kv_cache[0][0].shape)
-print(kv_cache[0][0])
+#print(kv_cache[0][0].shape)
+#print(kv_cache[0][0])
 
-print(kv_cache[0][1].shape)
-print(kv_cache[0][1])
+#print(kv_cache[0][1].shape)
+#print(kv_cache[0][1])
 
 with torch.no_grad():
-    try:
-        ssm_outputs = hybrid_model.generate(
-            input_ids,
-            max_new_tokens=1,
-            #use_cache=True,
-            return_dict_in_generate=True,
-            output_attentions=True
-        )
-    except:
-        print("Error in SSM forward")
+    # try:
+    ssm_outputs = hybrid_model.generate(
+        input_ids,
+        max_new_tokens=1,
+        #use_cache=True,
+        return_dict_in_generate=True,
+        output_attentions=True
+    )
+    # except:
+    #     print("Error in SSM forward")
 
 #TODO: replace with attention and shortcut in forward. 
 #Worst case scenario, manually step through hidden states to get querys from transformer
