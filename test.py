@@ -69,11 +69,13 @@ with torch.no_grad():
     # try:
     ssm_outputs = hybrid_model.generate(
         input_ids,
-        max_new_tokens=1,
+        max_new_tokens=20,
         #use_cache=True,
         return_dict_in_generate=True,
         output_attentions=True
     )
+
+    print(ssm_outputs)
     # except:
     #     print("Error in SSM forward")
 

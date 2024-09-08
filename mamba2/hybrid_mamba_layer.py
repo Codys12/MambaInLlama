@@ -284,10 +284,6 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         k = repeat_kv(k, num_key_value_groups)
         v = repeat_kv(v, num_key_value_groups)
 
-        print(q.shape)
-        print(k.shape)
-        print(v.shape)
-
         attn_output = torch.nn.functional.scaled_dot_product_attention(
             q,
             k,
