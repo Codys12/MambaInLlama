@@ -272,7 +272,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         k = k.view(batch, seqlen, -1, self.headdim).transpose(1, 2)
         v = v.view(batch, seqlen, -1, self.headdim).transpose(1, 2)
 
-        _, num_key_value_groups, _, _ = v.shape
+        _, num_key_value_heads, _, _ = v.shape
 
         position_ids = torch.arange(seqlen, dtype=torch.long, device=q.device)
         position_ids = position_ids.unsqueeze(0).expand(batch, -1)
@@ -280,6 +280,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         cos, sin = self.rotary_emb(v, position_ids)
         q, k = apply_rotary_pos_emb(q, k, cos, sin)
 
+        num_key_value_groups = self.nheads // num_key_value_heads
         k = repeat_kv(k, num_key_value_groups)
         v = repeat_kv(v, num_key_value_groups)
 
