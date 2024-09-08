@@ -74,11 +74,11 @@ with torch.no_grad():
             return_dict_in_generate=True,
             output_attentions=True
         )
-    except:
-        pass
+    except (e):
+        print(e)
 
 #TODO: replace with attention and shortcut in forward. 
 #Worst case scenario, manually step through hidden states to get querys from transformer
 
 #print(outputs)
-print(dir(outputs))
+#print(dir(outputs))
