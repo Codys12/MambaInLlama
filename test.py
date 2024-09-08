@@ -50,7 +50,7 @@ input_ids = input_ids.to("cuda")
 with torch.no_grad():
     outputs = transformer_model.generate(
         input_ids,
-        max_length=1,
+        max_new_tokens=1,
         use_cache=True,
         return_dict_in_generate=True,
         output_attentions=True
@@ -69,13 +69,16 @@ with torch.no_grad():
     try:
         ssm_outputs = hybrid_model.generate(
             input_ids,
-            max_length=20,
+            max_new_tokens=1,
             #use_cache=True,
             return_dict_in_generate=True,
             output_attentions=True
         )
     except:
         pass
+
+#TODO: replace with attention and shortcut in forward. 
+#Worst case scenario, manually step through hidden states to get querys from transformer
 
 #print(outputs)
 print(dir(outputs))
