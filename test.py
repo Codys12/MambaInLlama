@@ -74,8 +74,8 @@ with torch.no_grad():
             return_dict_in_generate=True,
             output_attentions=True
         )
-    except (e):
-        print(e)
+    except:
+        print("Error in SSM forward")
 
 #TODO: replace with attention and shortcut in forward. 
 #Worst case scenario, manually step through hidden states to get querys from transformer

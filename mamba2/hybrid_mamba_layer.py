@@ -236,7 +236,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         v = B
 
         #q = q.view(batch, seqlen, self.nheads, self.headdim).transpose(1, 2)
-        k = k.view(batch, seqlen, self.nheads, self.headdim).transpose(1, 2)
+        k = k.view(batch, seqlen, -1, self.headdim).transpose(1, 2)
         #value_states = value_states.view(bsz, q_len, self.num_key_value_heads, self.headdim).transpose(1, 2)
         print(q.shape)
         print(k.shape)
