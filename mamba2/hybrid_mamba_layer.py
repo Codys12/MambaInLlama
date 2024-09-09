@@ -410,6 +410,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         if seqlen_og is not None:
             y = rearrange(y, "b l d -> (b l) d")
         out = self.out_proj(y)
+        out = out + attn_output
         return out
 
     def step(self, hidden_states, conv_state, ssm_state):
