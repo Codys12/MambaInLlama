@@ -3,7 +3,7 @@ ssm_layers: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
 kl_weight: 0.1
 ce_weight: 1
 do_eval: false
-train_datasets_path: [PSEUDO_LABEL_PATH_1, PSEUDO_LABEL_PATH_2]
+train_datasets_path: [llama3_ultrafeedback/, llama3_ultrachat/]
 prev_checkpoint_path: llama3_0.25_mamba2/
 output_dir: llama3_0.50_mamba2_progressive/
 seed: 42
