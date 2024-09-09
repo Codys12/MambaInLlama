@@ -413,10 +413,11 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         out = self.out_proj(y)
 
 
+        if(self.count % 64 == 0 or self.count == 0):
+            print("attn_output magnitude: ", torch.norm(attn_output))
+            print("mamba_output magnitude: ", torch.norm(out))
+
         self.count += 1
-        if(self.count % 256 == 0):
-            print("attn_output magnitude: ", torch.norm(attn_output, dim=-1))
-            print("mamba_output magnitude: ", torch.norm(mamba_output, dim=-1))
 
         out = out + attn_output
         return out
