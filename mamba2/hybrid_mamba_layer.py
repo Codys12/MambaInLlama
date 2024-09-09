@@ -147,6 +147,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         
         self.nheads = self.ngroups
         self.headdim = self.d_state
+        self.count = 0
 
         # Order: [z, x, B, C, dt]
         # [hidden_dim, hidden_dim, d_state]
@@ -410,6 +411,13 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         if seqlen_og is not None:
             y = rearrange(y, "b l d -> (b l) d")
         out = self.out_proj(y)
+
+
+        self.count += 1
+        if(self.count % 256 == 0):
+            print("attn_output magnitude: ", torch.norm(attn_output, dim=-1))
+            print("mamba_output magnitude: ", torch.norm(mamba_output, dim=-1))
+
         out = out + attn_output
         return out
 
