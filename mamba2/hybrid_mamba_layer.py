@@ -297,7 +297,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         attn_output = attn_output.view(batch, seqlen, -1)
 
         attn_output = self.out_proj(attn_output)
-        return attn_output
+        #return attn_output
 
 
         if self.repeat_kv_before_conv:
