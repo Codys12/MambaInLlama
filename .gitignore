@@ -161,3 +161,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 deprecate*/
+
+# Ignore large .pt files
+llama3_ultrachat/input_ids.pt
+llama3_ultrachat/labels.pt
+llama3_ultrafeedback/input_ids.pt
+llama3_ultrafeedback/labels.pt
