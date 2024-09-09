@@ -5,7 +5,7 @@ import dataclasses
 from dataclasses import dataclass, field
 from typing import Any, List, Tuple, Optional, NewType
 from transformers import HfArgumentParser
-from alignment import SFTConfig
+from trl import SFTConfig
 
 DataClassType = NewType("DataClassType", Any)
 
