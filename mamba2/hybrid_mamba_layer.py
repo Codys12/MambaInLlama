@@ -416,6 +416,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         if(self.layer_idx == 16 and (self.count % 64 == 0 or self.count == 0)):
             print(f"attn_output magnitude: {torch.norm(attn_output)}")
             print(f"mamba_output magnitude: {torch.norm(out)}")
+            print(f"combined magnitude: {torch.norm(out + attn_output)}")
 
         self.count += 1
 
