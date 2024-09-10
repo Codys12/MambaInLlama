@@ -412,6 +412,18 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
             y = rearrange(y, "b l d -> (b l) d")
         out = self.out_proj(y)
 
+        attn_norm = torch.norm(attn_output)
+        mamba_norm = torch.norm(out)
+        
+        # Find the smaller of the two norms
+        min_norm = torch.min(attn_norm, mamba_norm)
+        
+        # Compute the scaling factor (1/2 of the smallest vector's scale)
+        scaling_factor = 0.5 * min_norm
+        
+        # Scale both vectors
+        attn_output = attn_output * (scaling_factor / attn_norm)
+        out = out * (scaling_factor / mamba_norm)
 
         if(self.layer_idx == 16 and (self.count % 64 == 0 or self.count == 0)):
             print(f"attn_output magnitude: {torch.norm(attn_output)}")
