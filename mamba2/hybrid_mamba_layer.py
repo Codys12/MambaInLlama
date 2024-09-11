@@ -285,19 +285,19 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         k = repeat_kv(k, num_key_value_groups)
         v = repeat_kv(v, num_key_value_groups)
 
-        attn_output = torch.nn.functional.scaled_dot_product_attention(
-            q,
-            k,
-            v,
-            #attn_mask=causal_mask,
-            #dropout_p=self.attention_dropout if self.training else 0.0,
-            is_causal=True,
-        )
+        # attn_output = torch.nn.functional.scaled_dot_product_attention(
+        #     q,
+        #     k,
+        #     v,
+        #     #attn_mask=causal_mask,
+        #     #dropout_p=self.attention_dropout if self.training else 0.0,
+        #     is_causal=True,
+        # )
 
-        attn_output = attn_output.transpose(1, 2).contiguous()
-        attn_output = attn_output.view(batch, seqlen, -1)
+        # attn_output = attn_output.transpose(1, 2).contiguous()
+        # attn_output = attn_output.view(batch, seqlen, -1)
 
-        attn_output = self.out_proj(attn_output)
+        # attn_output = self.out_proj(attn_output)
         #return attn_output
 
 
@@ -412,28 +412,29 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
             y = rearrange(y, "b l d -> (b l) d")
         out = self.out_proj(y)
 
-        attn_norm = torch.norm(attn_output)
-        mamba_norm = torch.norm(out)
+        # attn_norm = torch.norm(attn_output)
+        # mamba_norm = torch.norm(out)
         
-        # Find the smaller of the two norms
-        min_norm = torch.min(attn_norm, mamba_norm)
+        # # Find the smaller of the two norms
+        # min_norm = torch.min(attn_norm, mamba_norm)
         
-        # Compute the scaling factor (1/2 of the smallest vector's scale)
-        scaling_factor = 0.5 * min_norm
+        # # Compute the scaling factor (1/2 of the smallest vector's scale)
+        # scaling_factor = 0.5 * min_norm
         
-        # Scale both vectors
-        attn_output = attn_output * (scaling_factor / attn_norm)
-        out = out * (scaling_factor / mamba_norm)
+        # # Scale both vectors
+        # attn_output = attn_output * (scaling_factor / attn_norm)
+        # out = out * (scaling_factor / mamba_norm)
 
         if(self.layer_idx == 16 and (self.count % 64 == 0 or self.count == 0)):
-            print(f"attn_output magnitude: {torch.norm(attn_output)}")
+            #print(f"attn_output magnitude: {torch.norm(attn_output)}")
             print(f"mamba_output magnitude: {torch.norm(out)}")
-            print(f"combined magnitude: {torch.norm(out + attn_output)}")
-            print(f"distance: {torch.norm(out - attn_output)}")
+            #print(f"combined magnitude: {torch.norm(out + attn_output)}")
+            #print(f"distance: {torch.norm(out - attn_output)}")
 
         self.count += 1
 
-        out = out + attn_output
+        #out = out + attn_output
+        out = out / self.nheads
         return out
 
     def step(self, hidden_states, conv_state, ssm_state):
