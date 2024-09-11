@@ -435,7 +435,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         self.count += 1
 
         #out = out + attn_output
-        out = out / (2.0 * self.scaling_factor)
+        out = out / (2.0 * self.scale_factor)
         return out
 
     def step(self, hidden_states, conv_state, ssm_state):
