@@ -4,7 +4,7 @@ kl_weight: 0.1
 ce_weight: 1
 do_eval: false
 train_datasets_path: [llama3_ultrafeedback/, llama3_ultrachat/]
-prev_checkpoint_path: llama3_0.25_mamba2/
+prev_checkpoint_path: llama3_0.25_mamba2_4/
 output_dir: llama3_0.50_mamba2_progressive/
 seed: 42
 save_steps: 5000
