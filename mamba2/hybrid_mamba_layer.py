@@ -127,6 +127,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         self.headdim = headdim
         self.d_ssm = self.d_inner if d_ssm is None else d_ssm // self.world_size
         self.scale_factor = ngroups
+        print(f"NGROUPS: {ngroups}")
         assert ngroups % self.world_size == 0
         self.ngroups = ngroups // self.world_size
         assert self.d_ssm % self.headdim == 0
@@ -435,7 +436,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         self.count += 1
 
         #out = out + attn_output
-        out = out / (2.1 * self.scale_factor)
+        out = out / (2.0 * self.scale_factor)
         return out
 
     def step(self, hidden_states, conv_state, ssm_state):
