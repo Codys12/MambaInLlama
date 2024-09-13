@@ -11,11 +11,13 @@ from einops import rearrange, repeat
 try:
     from causal_conv1d import causal_conv1d_fn, causal_conv1d_update
 except ImportError:
+    print("Error importing causalconv1d")
     causal_conv1d_fn, causal_conv1d_update = None, None
 
 try:
     from causal_conv1d.causal_conv1d_varlen import causal_conv1d_varlen_states
 except ImportError:
+    print("Error importing causalconv1d")
     causal_conv1d_varlen_states = None
 
 try:
