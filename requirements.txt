@@ -66,7 +66,6 @@ jsonlines==4.0.0
 jsonschema-specifications==2023.12.1
 jsonschema==4.22.0
 langdetect==1.0.9
-lm_eval==1.0.0
 lxml==5.2.2
 mamba-ssm==2.2.2
 markdown-it-py==3.0.0
