@@ -290,7 +290,7 @@ dependencies:
       - tiktoken==0.7.0
       - together==1.2.7
       - tokenizers==0.19.1
-      - torch==2.1.1+cu118
+      - torch
       - tqdm==4.66.4
       - tqdm-multiprocess==0.0.11
       - transformers==4.43.1
