@@ -161,7 +161,6 @@ dependencies:
       - language-data==1.2.0
       - latex2mathml==3.77.0
       - linkify-it-py==2.0.3
-      - lm-eval==1.0.0
       - lxml==5.2.2
       - mamba-ssm==2.2.2
       - marisa-trie==1.2.0
