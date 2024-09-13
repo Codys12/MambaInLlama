@@ -334,6 +334,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         assert self.activation in ["silu", "swish"]
 
         if causal_conv1d_fn is None or self.activation not in ["silu", "swish"]:
+            print("USING SLOW causalconv1d")
             assert seq_idx is None, "varlen conv1d requires the causal_conv1d package"
             xBC = self.act(
                 self.conv1d(xBC.transpose(1, 2)).transpose(1, 2)[:, -(self.dconv - 1):]
