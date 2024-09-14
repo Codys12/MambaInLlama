@@ -268,7 +268,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
             dim=-1
         )
 
-        x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
+        #x, B, C = torch.split(xBC, [self.d_xb, self.d_xb, self.ngroups * self.d_state], dim=-1)
         # q = C[:, :, :self.d_inner]
         # k = B
         # v = x
@@ -430,13 +430,13 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         # attn_output = attn_output * (scaling_factor / attn_norm)
         # out = out * (scaling_factor / mamba_norm)
 
-        if(self.layer_idx == 16 and (self.count % 64 == 0 or self.count == 0)):
+        #if(self.layer_idx == 16 and (self.count % 64 == 0 or self.count == 0)):
             #print(f"attn_output magnitude: {torch.norm(attn_output)}")
-            print(f"mamba_output magnitude: {torch.norm(out)}")
+            # print(f"mamba_output magnitude: {torch.norm(out)}")
             #print(f"combined magnitude: {torch.norm(out + attn_output)}")
             #print(f"distance: {torch.norm(out - attn_output)}")
 
-        self.count += 1
+        # self.count += 1
 
         #out = out + attn_output
         #out = out / (2.0 * self.scale_factor)
