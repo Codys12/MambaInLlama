@@ -123,7 +123,7 @@ def main():
     model_kwargs = dict(
         revision=model_args.model_revision,
         trust_remote_code=model_args.trust_remote_code,
-        use_flash_attention_2=model_args.use_flash_attention_2,
+        attn_implementation=model_args.attn_implementation,
         torch_dtype=torch_dtype,
         use_cache=False,
         # use_cache=False if training_args.gradient_checkpointing else True,
@@ -171,9 +171,7 @@ def main():
         for index in random.sample(range(len(raw_datasets["train"])), 3):
             logger.info(f"Sample {index} of the processed training set:\n\n{raw_datasets['train'][index]['text']}")
 
-    attn_implementation="flash_attention_2"
-    if not model_args.use_flash_attention_2:
-        attn_implementation="eager"
+    attn_implementation=model_args.attn_implementation
 
     if not training_args.with_distill:
         config = AutoConfig.from_pretrained(model_args.model_name_or_path, dtype=model_args.torch_dtype)
