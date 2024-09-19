@@ -119,7 +119,7 @@ def main():
 
     # Freeze all non mamba parameters in student  model
     for name, param in student_model.named_parameters():
-        if f"mamba" not in name:
+        if f"mamba" not in name or f"self_attn" in name:
             param.requires_grad = False
 
     if accelerator.is_main_process:
