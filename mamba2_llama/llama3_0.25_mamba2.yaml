@@ -1,4 +1,4 @@
-model_name: meta-llama/Meta-Llama-3-8B-Instruct
+model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
 ssm_layers: [0, 4, 8, 12, 16, 20, 24, 28]
 kl_weight: 0.1
 ce_weight: 1
