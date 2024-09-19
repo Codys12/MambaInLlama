@@ -15,7 +15,7 @@ class DistillConfig(transformers.TrainingArguments):
     Arguments related to the distillation process.
     """
 
-    model_name: str = field(
+    model_name_or_path: str = field(
         default="HuggingFaceH4/zephyr-7b-beta",
         metadata={"help": "HuggingFace model to distill from."},
     )
