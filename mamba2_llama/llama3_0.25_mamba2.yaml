@@ -1,10 +1,10 @@
-model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
+model_name: meta-llama/Meta-Llama-3-8B-Instruct
 ssm_layers: [0, 4, 8, 12, 16, 20, 24, 28]
 kl_weight: 0.1
 ce_weight: 1
 do_eval: false
 train_datasets_path: [llama3_ultrafeedback/, llama3_ultrachat/]
-output_dir: llama3_0.25_mamba2_4/
+output_dir: llama3_0.25_mamba2/
 seed: 42
 save_steps: 5000
 warmup_steps: 1500

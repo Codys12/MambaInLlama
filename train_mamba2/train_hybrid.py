@@ -57,7 +57,7 @@ def main():
 
     accelerator.wait_for_everyone()
 
-    model_name = training_args.model_name_or_path
+    model_name = training_args.model_name
     dtype = torch.bfloat16
     attn_implementation = "flash_attention_2"
     
