@@ -290,22 +290,18 @@ def main():
             if (step > 0 and step % training_args.gradient_accumulation_steps == 0) or step == len(train_dataloader) - 1:
                 torch.nn.utils.clip_grad_norm_(
                     student_model.parameters(), training_args.max_grad_norm)
-                for layer in student_model.model.model.layers:
+                unwrapped_model = accelerator.unwrap_model(student_model)
+
+                for layer in unwrapped_model.model.model.layers:
                     if isinstance(layer, MambaDecoderLayer):
                         if layer.mamba.out_proj.weight.grad is not None:
-                            # Zero out gradients for the out_proj (entirely)
                             layer.mamba.out_proj.weight.grad.zero_()
                         if layer.mamba.in_proj.weight.grad is not None:
                             d_inner = mamba_config.d_inner
                             d_xb = mamba_config.d_xb
-                            # Zero out gradients corresponding to q, k, v projections
-                            # Zeroing out 'v' projection gradients
                             layer.mamba.in_proj.weight.grad[d_inner : d_inner + d_xb].zero_()
-                            # Zeroing out 'k' projection gradients
                             layer.mamba.in_proj.weight.grad[d_inner + d_xb : d_inner + 2 * d_xb].zero_()
-                            # Zeroing out 'q' projection gradients
                             layer.mamba.in_proj.weight.grad[d_inner + 2 * d_xb : 2 * d_inner + 2 * d_xb].zero_()
-                            # The rest of the gradients in in_proj are left intact
 
                 optimizer.step()
                 lr_scheduler.step()
