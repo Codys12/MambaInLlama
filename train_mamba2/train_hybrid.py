@@ -290,7 +290,7 @@ def main():
             if (step > 0 and step % training_args.gradient_accumulation_steps == 0) or step == len(train_dataloader) - 1:
                 torch.nn.utils.clip_grad_norm_(
                     student_model.parameters(), training_args.max_grad_norm)
-                print(student_model.parameters())
+                print(dir(student_model.parameters()))
                 # unwrapped_model = accelerator.unwrap_model(student_model)
 
                 # for layer in unwrapped_model.model.model.layers:
