@@ -294,10 +294,8 @@ def main():
                 for name, param in student_model.named_parameters():
                     if param.grad is not None:
                         if 'mamba.out_proj.weight' in name:
-                            print("Match found for out_proj!")
                             param.grad.zero_()
                         elif 'mamba.in_proj.weight' in name:
-                            print("Match found for in_proj!")
                             d_inner = mamba_config.d_inner
                             d_xb = mamba_config.d_xb
                             grad = param.grad
