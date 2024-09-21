@@ -290,18 +290,19 @@ def main():
             if (step > 0 and step % training_args.gradient_accumulation_steps == 0) or step == len(train_dataloader) - 1:
                 torch.nn.utils.clip_grad_norm_(
                     student_model.parameters(), training_args.max_grad_norm)
-                unwrapped_model = accelerator.unwrap_model(student_model)
+                print(student_model.parameters())
+                # unwrapped_model = accelerator.unwrap_model(student_model)
 
-                for layer in unwrapped_model.model.model.layers:
-                    if isinstance(layer, MambaDecoderLayer):
-                        if layer.mamba.out_proj.weight.grad is not None:
-                            layer.mamba.out_proj.weight.grad.zero_()
-                        if layer.mamba.in_proj.weight.grad is not None:
-                            d_inner = mamba_config.d_inner
-                            d_xb = mamba_config.d_xb
-                            layer.mamba.in_proj.weight.grad[d_inner : d_inner + d_xb].zero_()
-                            layer.mamba.in_proj.weight.grad[d_inner + d_xb : d_inner + 2 * d_xb].zero_()
-                            layer.mamba.in_proj.weight.grad[d_inner + 2 * d_xb : 2 * d_inner + 2 * d_xb].zero_()
+                # for layer in unwrapped_model.model.model.layers:
+                #     if isinstance(layer, MambaDecoderLayer):
+                #         if layer.mamba.out_proj.weight.grad is not None:
+                #             layer.mamba.out_proj.weight.grad.zero_()
+                #         if layer.mamba.in_proj.weight.grad is not None:
+                #             d_inner = mamba_config.d_inner
+                #             d_xb = mamba_config.d_xb
+                #             layer.mamba.in_proj.weight.grad[d_inner : d_inner + d_xb].zero_()
+                #             layer.mamba.in_proj.weight.grad[d_inner + d_xb : d_inner + 2 * d_xb].zero_()
+                #             layer.mamba.in_proj.weight.grad[d_inner + 2 * d_xb : 2 * d_inner + 2 * d_xb].zero_()
 
                 optimizer.step()
                 lr_scheduler.step()
