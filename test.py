@@ -4,7 +4,7 @@ from mamba2.hybrid_wrapper import MambaTransformerHybridModelWrapper
 from mamba2.hybrid_mamba_config import MambaConfig
 
 # Load the transformer model
-model_name = "./llama3_0.25_mamba2"
+model_name = "./llama3_0.50_mamba2_progresive"
 #transformer_model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
