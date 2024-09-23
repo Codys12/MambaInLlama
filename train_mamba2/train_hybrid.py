@@ -291,17 +291,17 @@ def main():
                 torch.nn.utils.clip_grad_norm_(
                     student_model.parameters(), training_args.max_grad_norm)
 
-                # for name, param in student_model.named_parameters():
-                #     if param.grad is not None:
-                #         if 'mamba.out_proj.weight' in name:
-                #             param.grad.zero_()
-                #         elif 'mamba.in_proj.weight' in name:
-                #             d_inner = mamba_config.d_inner
-                #             d_xb = mamba_config.d_xb
-                #             grad = param.grad
-                #             grad[d_inner: d_inner + d_xb].zero_()
-                #             grad[d_inner + d_xb: d_inner + 2 * d_xb].zero_()
-                #             grad[d_inner + 2 * d_xb: 2 * d_inner + 2 * d_xb].zero_()
+                for name, param in student_model.named_parameters():
+                    if param.grad is not None:
+                        if 'mamba.out_proj.weight' in name:
+                            param.grad.zero_()
+                        elif 'mamba.in_proj.weight' in name:
+                            d_inner = mamba_config.d_inner
+                            d_xb = mamba_config.d_xb
+                            grad = param.grad
+                            grad[d_inner: d_inner + d_xb].zero_()
+                            grad[d_inner + d_xb: d_inner + 2 * d_xb].zero_()
+                            grad[d_inner + 2 * d_xb: 2 * d_inner + 2 * d_xb].zero_()
 
                 optimizer.step()
                 lr_scheduler.step()
