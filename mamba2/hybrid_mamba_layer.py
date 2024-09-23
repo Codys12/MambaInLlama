@@ -509,6 +509,7 @@ class Mamba2(nn.Module, PyTorchModelHubMixin):
         if d_mlp > 0:
             y = torch.cat([F.silu(z0) * x0, y], dim=-1)
         out = self.out_proj(y)
+        out = out / (2.0 * self.scale_factor)
         return out.unsqueeze(1), conv_state, ssm_state
 
     def allocate_inference_cache(self, batch_size, max_seqlen, dtype=None, **kwargs):
