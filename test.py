@@ -52,7 +52,7 @@ input_ids = tokenizer.apply_chat_template(
     messages,
     add_generation_prompt=True,
     return_tensors="pt"
-).to(hybrid_model.device)
+).to("cuda")
 
 terminators = [
     tokenizer.eos_token_id,
