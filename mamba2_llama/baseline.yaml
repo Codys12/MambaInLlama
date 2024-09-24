@@ -1,5 +1,5 @@
 model_name: meta-llama/Meta-Llama-3-8B-Instruct
-ssm_layers: []
+ssm_layers: [0]
 kl_weight: 0.1
 ce_weight: 1
 do_eval: false
