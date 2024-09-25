@@ -29,7 +29,7 @@ def main():
     mamba_config = MambaConfig(
         d_model=config.hidden_size,
         ssm_cfg={"expand": 1, "ngroups": config.num_attention_heads, "d_state": d_state},
-        eps=config.rms_norm_eps,
+        rms_norm_eps=config.rms_norm_eps,
         d_inner=d_inner,
         d_xb=d_xb,
         intermediate_size=config.intermediate_size,
