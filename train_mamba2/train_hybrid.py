@@ -118,7 +118,7 @@ def main():
         for (layer_id, layer_checkpoint) in prev_checkpoint_layers.items():
             if is_mamba_layer[layer_id]:
                 # override weights of that layer
-                student_model.model.model.layers[layer_id].load_state_dict(
+                student_model.module.model.model.layers[layer_id].load_state_dict(
                     layer_checkpoint)
 
     # Freeze all parameters in teacher model by setting requires_grad to False
@@ -354,13 +354,13 @@ def main():
                 loss = 0.0
 
                 # Iterate over each layer
-                for layer_idx in range(len(student_model.model.model.layers)):
+                for layer_idx in range(len(student_model.module.model.model.layers)):
                     # Get teacher's input and output hidden states for the layer
                     teacher_input = teacher_hidden_states[layer_idx]
                     teacher_output = teacher_hidden_states[layer_idx + 1]
 
                     # Get the corresponding student layer
-                    student_layer = student_model.model.model.layers[layer_idx]
+                    student_layer = student_model.module.model.model.layers[layer_idx]
 
                     # Forward pass through the student layer
                     student_output = student_layer(
@@ -376,7 +376,7 @@ def main():
                     loss += layer_loss
 
                 # Normalize loss by the number of layers
-                loss = loss / len(student_model.model.model.layers)
+                loss = loss / len(student_model.module.model.model.layers)
 
                 curr_loss += loss.detach().float()
 
