@@ -32,14 +32,6 @@ def main():
     parser = DistillArgumentParser(DistillConfig)
     training_args = parser.parse()
 
-    # Add a new argument for layer-wise training percentage
-    parser.add_argument(
-        "--layerwise_training_percentage",
-        type=float,
-        default=0.0,
-        help="Percentage of total training steps dedicated to layer-wise training (between 0 and 1).",
-    )
-    training_args = parser.parse()
 
     accelerator = Accelerator(log_with="wandb")
 
