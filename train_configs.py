@@ -35,6 +35,10 @@ class DistillConfig(transformers.TrainingArguments):
         default=1,
         metadata={"help": "Ratio of CE loss."},
     )
+    layerwise_training_percentage: float = field(
+        default=0.8,
+        metadata={"help": "Percentage of total training steps dedicated to layer-wise training (between 0 and 1)."},
+    )
     train_datasets_path: List[str] = field(
         default=None,
         metadata={"help": "Training datasets."},
