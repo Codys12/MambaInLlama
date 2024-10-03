@@ -255,7 +255,7 @@ def main():
 
     # Set models to output hidden states
     teacher_model.config.output_hidden_states = True
-    student_model.model.config.output_hidden_states = True
+    student_model.module.model.config.output_hidden_states = True
 
     # Train!
     total_batch_size = (
