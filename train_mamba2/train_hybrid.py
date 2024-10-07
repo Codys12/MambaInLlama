@@ -361,7 +361,6 @@ def main():
                 for layer_idx in range(len(student_model.module.model.model.layers)):
                     # Get teacher's input and output hidden states for the layer
                     teacher_input = teacher_hidden_states[layer_idx]
-                    print(teacher_input.shape)
                     teacher_output = teacher_hidden_states[layer_idx + 1]
 
                     # Get the corresponding student layer
@@ -376,7 +375,7 @@ def main():
                     )[0]
 
                     # Compute loss between student and teacher outputs
-                    layer_loss = F.mse_loss(student_output, teacher_output)
+                    layer_loss = torch.norm(student_output - teacher_output, p=2)
 
                     # Accumulate the loss
                     loss += layer_loss
