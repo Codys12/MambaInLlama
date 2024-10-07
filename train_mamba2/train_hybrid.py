@@ -359,7 +359,6 @@ def main():
 
                 # Iterate over each layer
                 for layer_idx in range(len(student_model.module.model.model.layers)):
-                    print(layer_idx)
                     # Get teacher's input and output hidden states for the layer
                     teacher_input = teacher_hidden_states[layer_idx]
                     print(teacher_input.shape)
@@ -383,7 +382,7 @@ def main():
                     loss += layer_loss
 
                 # Normalize loss by the number of layers
-                loss = loss / len(student_model.module.model.model.layers)
+                #loss = loss / len(student_model.module.model.model.layers)
 
                 curr_loss += loss.detach().float()
 
