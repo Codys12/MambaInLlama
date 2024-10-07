@@ -353,6 +353,10 @@ def main():
                 # Initialize loss
                 loss = 0.0
 
+                position_ids = torch.arange(
+                    input_ids.size(1), device=input_ids.device
+                ).unsqueeze(0).expand_as(input_ids)
+
                 # Iterate over each layer
                 for layer_idx in range(len(student_model.module.model.model.layers)):
                     print(layer_idx)
@@ -368,6 +372,7 @@ def main():
                     student_output = student_layer(
                         teacher_input,
                         attention_mask=attention_mask,
+                        position_ids=position_ids,
                         use_cache=False,
                     )[0]
 
