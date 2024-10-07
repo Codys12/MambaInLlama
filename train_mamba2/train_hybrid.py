@@ -355,6 +355,7 @@ def main():
 
                 # Iterate over each layer
                 for layer_idx in range(len(student_model.module.model.model.layers)):
+                    print(layer_idx)
                     # Get teacher's input and output hidden states for the layer
                     teacher_input = teacher_hidden_states[layer_idx]
                     print(teacher_input.shape)
