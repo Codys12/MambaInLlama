@@ -387,6 +387,9 @@ def main():
 
                 loss = loss / training_args.gradient_accumulation_steps
                 accelerator.backward(loss)
+
+                del teacher_hidden_states
+                torch.cuda.empty_cache()
             else:
                 # End-to-end training (same as original script)
                 with torch.no_grad():
