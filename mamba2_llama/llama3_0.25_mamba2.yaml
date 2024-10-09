@@ -15,4 +15,3 @@ gradient_accumulation_steps: 4
 lr_scheduler_type: cosine
 learning_rate: 8.0e-5
 max_grad_norm: 0.1
-layerwise_training_percentage: 0.00
