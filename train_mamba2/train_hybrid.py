@@ -396,6 +396,7 @@ def main():
                     teacher_outputs = teacher_model(
                         input_ids=input_ids,
                         attention_mask=attention_mask,
+                        output_hidden_states=False,
                         labels=labels,
                         use_cache=False,
                     )
