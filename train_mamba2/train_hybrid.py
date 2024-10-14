@@ -388,6 +388,7 @@ def main():
                 loss = loss / training_args.gradient_accumulation_steps
                 accelerator.backward(loss)
 
+                del student_output
                 del teacher_hidden_states
                 torch.cuda.empty_cache()
             else:
@@ -407,6 +408,7 @@ def main():
                 student_outputs = student_model(
                     input_ids=input_ids,
                     attention_mask=attention_mask,
+                    output_hidden_states=False,
                     labels=labels,
                     use_cache=False,
                 )
