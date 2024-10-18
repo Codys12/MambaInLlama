@@ -126,9 +126,9 @@ def main():
         param.requires_grad = False
 
     # Freeze all non-mamba parameters in student model
-    for name, param in student_model.named_parameters():
-        if f"mamba" not in name:
-            param.requires_grad = False
+    # for name, param in student_model.named_parameters():
+    #     if f"mamba" not in name:
+    #         param.requires_grad = False
 
     if accelerator.is_main_process:
         print("teacher_model:", teacher_model)
@@ -392,9 +392,9 @@ def main():
                 del teacher_hidden_states
                 torch.cuda.empty_cache()
             else:
-                # Unfreeze all parameters in student model by setting requires_grad to True
-                for param in student_model.parameters():
-                    param.requires_grad = True
+                # # Unfreeze all parameters in student model by setting requires_grad to True
+                # for param in student_model.parameters():
+                #     param.requires_grad = True
                 # End-to-end training (same as original script)
                 with torch.no_grad():
                     teacher_outputs = teacher_model(
